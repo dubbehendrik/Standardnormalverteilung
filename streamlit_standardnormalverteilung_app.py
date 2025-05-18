@@ -77,8 +77,11 @@ if (a_slider != st.session_state.a) or (b_slider != st.session_state.b):
     st.session_state.b_input = b_slider
     st.session_state.trigger = "slider"
     
-
 # === Wahrscheinlichkeiten berechnen ===
+a = st.session_state.a
+b = st.session_state.b
+a_idx = np.searchsorted(x, a)
+b_idx = np.searchsorted(x, b)
 a_idx = np.searchsorted(x, a)
 b_idx = np.searchsorted(x, b)
 phi_a = np.trapz(phi[:a_idx], x[:a_idx])
