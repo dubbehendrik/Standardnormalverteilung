@@ -99,6 +99,7 @@ with col1:
     ax1.set_xlabel("z")
     ax1.set_ylabel(r"Dichtefunktion $\varphi_{z}(z)$")
     ax1.set_title("Dichtefunktion")
+    ax1.grid(True, which='both', linestyle='--', color='lightgray', linewidth=0.5)
     st.pyplot(fig1)
     st.latex(f"P({a:.2f} \\leq Z \\leq {b:.2f}) = {prob:.4f}")
 
@@ -112,6 +113,7 @@ with col2:
     ax2.hlines([phi_a, phi_b], xmin=-6, xmax=[a, b], colors='green', linestyles='--')
     ax2.plot(a, phi_a, 'go')
     ax2.plot(b, phi_b, 'go')
+    ax2.plot(0, 0.5, 'o', color='blue', markersize=6, label="Wendepunkt (0, 0.5)")
     ax2.text(a, phi_a + 0.03, f"{phi_a:.4f}", ha='center',
              bbox=dict(facecolor='white', edgecolor='none', boxstyle='round,pad=0.3'))
     ax2.text(b, phi_b + 0.03, f"{phi_b:.4f}", ha='center',
@@ -119,6 +121,7 @@ with col2:
     ax2.set_xlabel("z")
     ax2.set_ylabel(r"Verteilungsfunktion $\Phi_{z}(z)$")
     ax2.set_title("Verteilungsfunktion")
+    ax2.grid(True, which='both', linestyle='--', color='lightgray', linewidth=0.5)
     st.pyplot(fig2)
     st.latex(f"\\Phi({b:.2f}) - \\Phi({a:.2f}) = {phi_b:.4f} - {phi_a:.4f} = {prob:.4f}")
 
