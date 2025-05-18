@@ -129,7 +129,17 @@ with col2:
     ax2.grid(True, which='both', linestyle='--', color='lightgray', linewidth=0.5)
     st.pyplot(fig2)
     
-st.latex(f"P({a:.2f} \\leq Z \\leq {b:.2f}) = \\Phi({b:.2f}) - \\Phi({a:.2f}) = {phi_b:.4f} - {phi_a:.4f} = \\underline{{\\underline{{{prob:.4f}}}}}")
+#st.latex(f"P({a:.2f} \\leq Z \\leq {b:.2f}) = \\Phi({b:.2f}) - \\Phi({a:.2f}) = {phi_b:.4f} - {phi_a:.4f} = \\underline{{\\underline{{{prob:.4f}}}}}")
+
+st.latex(rf"""
+\begin{{align*}}
+P({a:.2f} \leq Z \leq {b:.2f})
+&= \Phi({b:.2f}) - \Phi({a:.2f}) \\
+&= {phi_b:.4f} - {phi_a:.4f} \\
+&= \underline{{\underline{{{prob:.4f}}}}}
+\end{{align*}}
+""")
+
 # --- Feedback & Support ---
 st.markdown("""---""")
 st.subheader("🛠️ Feedback & Support")
