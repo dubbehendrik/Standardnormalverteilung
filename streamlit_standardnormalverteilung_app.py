@@ -12,7 +12,8 @@ st.image("HSE-Logo.jpg", width=1000)
 st.title("Berechnung der Bereichswahrscheinlichkeit unter der Standardnormalverteilung")
 
 # ========== Beschreibung und Formeln ==========
-st.markdown("""
+with st.expander("ℹ️ Hinweise zur Verwendung"):
+    st.markdown("""
 Die App berechnet die **Bereichswahrscheinlichkeit** unter der Standardnormalverteilung (SNV).  
 Dabei wird die Fläche unter der Dichtefunktion \\( \\varphi_z(z) \\) zwischen zwei Grenzen \\( a \\) und \\( b \\) bestimmt:
 
@@ -118,19 +119,46 @@ if a_input != a_new or b_input != b_new:
     st.session_state.a = a_input
     st.session_state.b = b_input
 
-# ========== Bug Report / Feature Request ==========
-st.markdown("---")
-st.markdown("### Fehler gefunden oder Idee?")
-st.markdown(
-    "👉 [Bug melden](https://github.com/dein-repo/issues/new?template=bug_report.md) &nbsp;&nbsp;&nbsp;"
-    "🚀 [Feature vorschlagen](https://github.com/dein-repo/issues/new?template=feature_request.md)"
-)
 
-# ========== Disclaimer ==========
-st.markdown("---")
+
+# --- Feedback & Support ---
+st.markdown("""---""")
+st.subheader("🛠️ Feedback & Support")
+
+col_fb1, col_fb2 = st.columns(2)
+
+with col_fb1:
+    st.markdown("""
+    <a href="https://github.com/dubbehendrik/strahlbreite/issues/new?template=bug_report.yml" target="_blank">
+        <button style="padding: 0.5rem 1rem; background-color: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            🐞 Bug melden
+        </button>
+    </a>
+    """, unsafe_allow_html=True)
+
+with col_fb2:
+    st.markdown("""
+    <a href="https://github.com/dubbehendrik/strahlbreite/issues/new?template=feature_request.yml" target="_blank">
+        <button style="padding: 0.5rem 1rem; background-color: #2ecc71; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            ✨ Feature anfragen
+        </button>
+    </a>
+    """, unsafe_allow_html=True)
+
+# --- Disclaimer ---
+st.markdown("""---""")
 st.markdown("""
-<div style='font-size: 0.9em; color: gray'>
-Diese Anwendung dient ausschließlich zu Lehr- und Demonstrationszwecken.  
-Alle Berechnungen erfolgen ohne Gewähr. Keine kommerzielle Nutzung erlaubt.
+<div style="font-size: 0.5rem; color: gray; text-align: center; line-height: 1.4;">
+<b>Disclaimer:</b><br>
+Diese Anwendung dient ausschließlich zu Demonstrations- und Lehrzwecken. 
+Es wird keine Gewähr für die Richtigkeit, Vollständigkeit oder Aktualität der bereitgestellten Inhalte übernommen.<br>
+Die Nutzung erfolgt auf eigene Verantwortung.<br>
+Eine kommerzielle Verwendung ist ausdrücklich nicht gestattet.<br>
+Für Schäden materieller oder ideeller Art, die durch die Nutzung der App entstehen, wird keine Haftung übernommen.
+<br><br>
+<a href="mailto:hendrik.dubbe@hs-esslingen.de?subject=Anfrage%20zu%20Standardnormalverteilung-App" 
+   style="color: gray; text-decoration: none;">
+Prof. Dr.-Ing. Hendrik Dubbe
+</a>
 </div>
 """, unsafe_allow_html=True)
