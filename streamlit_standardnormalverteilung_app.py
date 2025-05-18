@@ -46,34 +46,61 @@ x = np.arange(-randWert, randWert, dSchritt)
 phi = (2 * np.pi) ** -0.5 * np.exp(-0.5 * x**2)
 cumprob = np.cumsum(phi) * dSchritt
 
-# === Initialisierung ===
+# === Init-Session ===
 if "a" not in st.session_state: st.session_state.a = -1.96
 if "b" not in st.session_state: st.session_state.b = 1.96
+if "trigger" not in st.session_state: st.session_state.trigger = "init"
 
-# === Synchronisierungs-Logik ===
-def update_from_input():
-    st.session_state.a = st.session_state.a_input
-    st.session_state.b = st.session_state.b_input
+# === Fehlerhinweis vorbereiten ===
+error_message = None
 
-def update_from_slider():
-    st.session_state.a = st.session_state.slider_vals[0]
-    st.session_state.b = st.session_state.slider_vals[1]
-    st.session_state.a_input = st.session_state.a
-    st.session_state.b_input = st.session_state.b
+# === Validierungsfunktion ===
+def validate_input_bounds():
+    global error_message
+    if not (-6 <= st.session_state.a_input <= 6) or not (-6 <= st.session_state.b_input <= 6):
+        error_message = "Der Wertebereich in dieser Anwendung ist auf [-6; +6] beschränkt."
+        return False
+    if st.session_state.a_input >= st.session_state.b_input:
+        # Automatisch korrigieren: a kleiner als b
+        st.session_state.a_input = round(st.session_state.b_input - 0.01, 2)
+        st.session_state.a = st.session_state.a_input
+        st.session_state.b = st.session_state.b_input
+        st.session_state.slider_vals = (st.session_state.a_input, st.session_state.b_input)
+        return False
+    return True
 
 # === Eingabefelder ===
 col_a, col_b = st.columns(2)
 with col_a:
     st.number_input("Untere Grenze a", min_value=-6.0, max_value=6.0, step=0.01,
-                    key="a_input", on_change=update_from_input)
+                    key="a_input", on_change=validate_input_bounds)
 with col_b:
     st.number_input("Obere Grenze b", min_value=-6.0, max_value=6.0, step=0.01,
-                    key="b_input", on_change=update_from_input)
+                    key="b_input", on_change=validate_input_bounds)
 
-# === Bereichsslider ===
+# === Slider ===
+def update_from_slider():
+    st.session_state.a = st.session_state.slider_vals[0]
+    st.session_state.b = st.session_state.slider_vals[1]
+    # Konsistenz prüfen und ggf. korrigieren
+    if st.session_state.a >= st.session_state.b:
+        st.session_state.a = round(st.session_state.b - 0.01, 2)
+    st.session_state.a_input = st.session_state.a
+    st.session_state.b_input = st.session_state.b
+
 st.slider("Wähle den Bereich [a, b]", min_value=-6.0, max_value=6.0,
           value=(st.session_state.a, st.session_state.b), step=0.01,
           key="slider_vals", on_change=update_from_slider)
+
+# === Synchronisierung nach Input (nur bei korrektem Input)
+if validate_input_bounds():
+    st.session_state.a = st.session_state.a_input
+    st.session_state.b = st.session_state.b_input
+    st.session_state.slider_vals = (st.session_state.a, st.session_state.b)
+
+# === Fehler anzeigen, wenn vorhanden ===
+if error_message:
+    st.error(error_message)
     
 # === Wahrscheinlichkeiten berechnen ===
 a = st.session_state.a
