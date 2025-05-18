@@ -2,13 +2,13 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
-# ========== Seiteneinstellungen ==========
-st.set_page_config(page_title="Standardnormalverteilung Bereichswahrscheinlichkeit", layout="centered")
+st.set_page_config(layout="wide")
 
-# Logo (optional einfügen)
-st.image("HSE-Logo.jpg", width=1000)
+# --- Layout: Logo und Titel ---
+col_title, col_logo = st.columns([4, 1])
+with col_logo:
+    st.image("HSE-Logo.jpg", width=1000)
 
-# ========== Titel ==========
 st.title("Berechnung der Bereichswahrscheinlichkeit unter der Standardnormalverteilung")
 
 # ========== Beschreibung und Formeln ==========
