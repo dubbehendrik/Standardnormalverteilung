@@ -1,0 +1,2 @@
+# Standardnormalverteilung
+Berechnung der Bereichswahrscheinlichkeit an der Standardnormalverteilung
