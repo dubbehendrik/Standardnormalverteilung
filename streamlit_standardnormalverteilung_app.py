@@ -42,38 +42,41 @@ x = np.arange(-randWert, randWert, dSchritt)
 phi = (2 * np.pi) ** -0.5 * np.exp(-0.5 * x**2)
 cumprob = np.cumsum(phi) * dSchritt
 
-# === Session-State Initialisieren ===
-if "a" not in st.session_state: st.session_state.a = -1.96
-if "b" not in st.session_state: st.session_state.b = 1.96
+# === Init: Defaultwerte nur einmal setzen ===
+if "a" not in st.session_state:
+    st.session_state.a = -1.96
+if "b" not in st.session_state:
+    st.session_state.b = 1.96
+if "trigger" not in st.session_state:
+    st.session_state.trigger = "init"  # "slider" oder "input"
 
-# === Slider (wird als Input-Master behandelt) ===
-a_slider, b_slider = st.slider("Wähle den Bereich [a, b]",
-    min_value=-6.0, max_value=6.0, value=(st.session_state.a, st.session_state.b),
-    step=0.01, key="slider"
-)
-
-# === Eingabefelder ===
+# === Interaktion: Eingabefelder ===
 col_a, col_b = st.columns(2)
 with col_a:
-    a_input = st.number_input("Untere Grenze a", value=a_slider, step=0.01, key="a_input")
+    a_input = st.number_input("Untere Grenze a", value=st.session_state.a, step=0.01, key="a_input")
 with col_b:
-    b_input = st.number_input("Obere Grenze b", value=b_slider, step=0.01, key="b_input")
+    b_input = st.number_input("Obere Grenze b", value=st.session_state.b, step=0.01, key="b_input")
 
-# === Synchronisierung ===
+# === Eingabeänderung überwachen ===
 if (a_input != st.session_state.a) or (b_input != st.session_state.b):
-    # Textfeld wurde geändert → alles aktualisieren
     st.session_state.a = a_input
     st.session_state.b = b_input
-    st.session_state.slider = (a_input, b_input)
-elif (a_slider != st.session_state.a) or (b_slider != st.session_state.b):
-    # Slider wurde geändert → alles aktualisieren
+    st.session_state.trigger = "input"
+
+# === Interaktion: Slider (nach Eingabe setzen, nicht davor) ===
+a_slider, b_slider = st.slider(
+    "Wähle den Bereich [a, b]", min_value=-6.0, max_value=6.0,
+    value=(st.session_state.a, st.session_state.b), step=0.01, key="slider"
+)
+
+# === Slideränderung überwachen ===
+if (a_slider != st.session_state.a) or (b_slider != st.session_state.b):
     st.session_state.a = a_slider
     st.session_state.b = b_slider
     st.session_state.a_input = a_slider
     st.session_state.b_input = b_slider
-
-a = st.session_state.a
-b = st.session_state.b
+    st.session_state.trigger = "slider"
+    
 
 # === Wahrscheinlichkeiten berechnen ===
 a_idx = np.searchsorted(x, a)
