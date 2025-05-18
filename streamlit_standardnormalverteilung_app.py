@@ -16,22 +16,13 @@ with st.expander("ℹ️ Hinweise zur Verwendung"):
     st.markdown(r"""
 Die App berechnet die **Bereichswahrscheinlichkeit** unter der Standardnormalverteilung (SNV).  
 Dabei wird die Fläche unter der Dichtefunktion \( \varphi_z(z) \) zwischen zwei Grenzen \( a \) und \( b \) bestimmt:
-
-\[
-\varphi_z(z) = \frac{1}{\sqrt{2\pi}} \cdot e^{-\frac{z^2}{2}}
-\]
+st.latex(r"\varphi_z(z) = \frac{1}{\sqrt{2\pi}} \cdot e^{-\frac{z^2}{2}}")
 
 Die zugehörige **Verteilungsfunktion** lautet:
-
-\[
-\Phi_z(z) = \int_{-\infty}^{z} \varphi_z(u)\; du
-\]
+st.latex(r"\Phi_z(z) = \int_{-\infty}^{z} \varphi_z(u)\; du")
 
 Die Wahrscheinlichkeit im Intervall \( [a, b] \) ergibt sich dann zu:
-
-\[
-P(a \leq Z \leq b) = \Phi_z(b) - \Phi_z(a)
-\]
+st.latex(r"P(a \leq Z \leq b) = \Phi_z(b) - \Phi_z(a)")
 """)
 
 # === Standardnormalverteilung vorbereiten ===
