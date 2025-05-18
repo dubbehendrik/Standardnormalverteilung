@@ -129,7 +129,7 @@ col_fb1, col_fb2 = st.columns(2)
 
 with col_fb1:
     st.markdown("""
-    <a href="https://github.com/dubbehendrik/strahlbreite/issues/new?template=bug_report.yml" target="_blank">
+    <a href="https://github.com/dubbehendrik/Standardnormalverteilung/issues/new?template=bug_report.yml" target="_blank">
         <button style="padding: 0.5rem 1rem; background-color: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">
             🐞 Bug melden
         </button>
@@ -138,7 +138,7 @@ with col_fb1:
 
 with col_fb2:
     st.markdown("""
-    <a href="https://github.com/dubbehendrik/strahlbreite/issues/new?template=feature_request.yml" target="_blank">
+    <a href="https://github.com/dubbehendrik/Standardnormalverteilung/issues/new?template=feature_request.yml" target="_blank">
         <button style="padding: 0.5rem 1rem; background-color: #2ecc71; color: white; border: none; border-radius: 5px; cursor: pointer;">
             ✨ Feature anfragen
         </button>
