@@ -15,16 +15,26 @@ st.title("Berechnung der Bereichswahrscheinlichkeit unter der Standardnormalvert
 with st.expander("ℹ️ Hinweise zur Verwendung"):
     st.markdown(r"""
 Die App berechnet die **Bereichswahrscheinlichkeit** unter der Standardnormalverteilung (SNV).  
-Dabei wird die Fläche unter der Dichtefunktion $$\varphi_z(z)$$ zwischen zwei Grenzen \( a \) und \( b \) bestimmt:
-""")
-st.latex(r"\varphi_z(z) = \frac{1}{\sqrt{2\pi}} \cdot e^{-\frac{z^2}{2}}")
+Dabei wird die Fläche unter der Dichtefunktion $$\varphi_z(z)$$ zwischen zwei Grenzen $$a$$ und $$b$$ bestimmt:
+
+$$
+\varphi_z(z) = \frac{1}{\sqrt{2\pi}} \cdot e^{-\frac{z^2}{2}}
+$$
 
 Die zugehörige **Verteilungsfunktion** lautet:
-st.latex(r"\Phi_z(z) = \int_{-\infty}^{z} \varphi_z(u)\; du")
 
-Die Wahrscheinlichkeit im Intervall \( [a, b] \) ergibt sich dann zu:
-st.latex(r"P(a \leq Z \leq b) = \Phi_z(b) - \Phi_z(a)")
+$$
+\Phi_z(z) = \int_{-\infty}^{z} \varphi_z(u)\; du
+$$
 
+Die Wahrscheinlichkeit im Intervall $$[a, b]$$ ergibt sich dann zu:
+
+$$
+P(a \leq Z \leq b) = \Phi_z(b) - \Phi_z(a)
+$$
+
+Nutzen Sie den Schieberegler oder die Eingabefelder, um die Grenzen $$a$$ und $$b$$ zu setzen.
+""", unsafe_allow_html=True)
 # === Standardnormalverteilung vorbereiten ===
 randWert = 6
 dSchritt = 0.001
