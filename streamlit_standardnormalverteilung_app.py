@@ -46,41 +46,34 @@ x = np.arange(-randWert, randWert, dSchritt)
 phi = (2 * np.pi) ** -0.5 * np.exp(-0.5 * x**2)
 cumprob = np.cumsum(phi) * dSchritt
 
-# === Init: Defaultwerte und Trigger einmal setzen ===
-if "a" not in st.session_state:
-    st.session_state.a = -1.96
-if "b" not in st.session_state:
-    st.session_state.b = 1.96
-if "trigger" not in st.session_state:
-    st.session_state.trigger = "init"
+# === Initialisierung ===
+if "a" not in st.session_state: st.session_state.a = -1.96
+if "b" not in st.session_state: st.session_state.b = 1.96
+
+# === Synchronisierungs-Logik ===
+def update_from_input():
+    st.session_state.a = st.session_state.a_input
+    st.session_state.b = st.session_state.b_input
+
+def update_from_slider():
+    st.session_state.a = st.session_state.slider_vals[0]
+    st.session_state.b = st.session_state.slider_vals[1]
+    st.session_state.a_input = st.session_state.a
+    st.session_state.b_input = st.session_state.b
 
 # === Eingabefelder ===
 col_a, col_b = st.columns(2)
 with col_a:
-    a_input = st.number_input("Untere Grenze a", step=0.01, key="a_input")
+    st.number_input("Untere Grenze a", min_value=-6.0, max_value=6.0, step=0.01,
+                    key="a_input", on_change=update_from_input)
 with col_b:
-    b_input = st.number_input("Obere Grenze b", step=0.01, key="b_input")
+    st.number_input("Obere Grenze b", min_value=-6.0, max_value=6.0, step=0.01,
+                    key="b_input", on_change=update_from_input)
 
-# === Slider (NACH Eingabe setzen!) ===
-a_slider, b_slider = st.slider(
-    "Wähle den Bereich [a, b]",
-    min_value=-6.0, max_value=6.0,
-    value=(st.session_state.a, st.session_state.b),
-    step=0.01, key="ab_slider"
-)
-
-# === Trigger setzen ===
-if (a_input != st.session_state.a) or (b_input != st.session_state.b):
-    st.session_state.a = a_input
-    st.session_state.b = b_input
-    st.session_state.trigger = "input"
-
-elif (a_slider != st.session_state.a) or (b_slider != st.session_state.b):
-    st.session_state.a = a_slider
-    st.session_state.b = b_slider
-    st.session_state.a_input = a_slider
-    st.session_state.b_input = b_slider
-    st.session_state.trigger = "slider"
+# === Bereichsslider ===
+st.slider("Wähle den Bereich [a, b]", min_value=-6.0, max_value=6.0,
+          value=(st.session_state.a, st.session_state.b), step=0.01,
+          key="slider_vals", on_change=update_from_slider)
     
 # === Wahrscheinlichkeiten berechnen ===
 a = st.session_state.a
