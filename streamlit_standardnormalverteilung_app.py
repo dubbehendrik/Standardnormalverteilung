@@ -2,6 +2,9 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
+st.session_state.setdefault("a_input", -1.96)
+st.session_state.setdefault("b_input", 1.96)
+
 st.set_page_config(layout="wide")
 
 # --- Layout: Logo und Titel ---
@@ -35,6 +38,7 @@ $$
 
 Nutzen Sie den Schieberegler oder die Eingabefelder, um die Grenzen $$a$$ und $$b$$ zu setzen.
 """, unsafe_allow_html=True)
+    
 # === Standardnormalverteilung vorbereiten ===
 randWert = 6
 dSchritt = 0.001
@@ -42,35 +46,36 @@ x = np.arange(-randWert, randWert, dSchritt)
 phi = (2 * np.pi) ** -0.5 * np.exp(-0.5 * x**2)
 cumprob = np.cumsum(phi) * dSchritt
 
-# === Init: Defaultwerte nur einmal setzen ===
+# === Init: Defaultwerte und Trigger einmal setzen ===
 if "a" not in st.session_state:
     st.session_state.a = -1.96
 if "b" not in st.session_state:
     st.session_state.b = 1.96
 if "trigger" not in st.session_state:
-    st.session_state.trigger = "init"  # "slider" oder "input"
+    st.session_state.trigger = "init"
 
-# === Interaktion: Eingabefelder ===
+# === Eingabefelder ===
 col_a, col_b = st.columns(2)
 with col_a:
-    a_input = st.number_input("Untere Grenze a", value=st.session_state.a, step=0.01, key="a_input")
+    a_input = st.number_input("Untere Grenze a", step=0.01, key="a_input")
 with col_b:
-    b_input = st.number_input("Obere Grenze b", value=st.session_state.b, step=0.01, key="b_input")
+    b_input = st.number_input("Obere Grenze b", step=0.01, key="b_input")
 
-# === Eingabeänderung überwachen ===
+# === Slider (NACH Eingabe setzen!) ===
+a_slider, b_slider = st.slider(
+    "Wähle den Bereich [a, b]",
+    min_value=-6.0, max_value=6.0,
+    value=(st.session_state.a, st.session_state.b),
+    step=0.01, key="ab_slider"
+)
+
+# === Trigger setzen ===
 if (a_input != st.session_state.a) or (b_input != st.session_state.b):
     st.session_state.a = a_input
     st.session_state.b = b_input
     st.session_state.trigger = "input"
 
-# === Interaktion: Slider (nach Eingabe setzen, nicht davor) ===
-a_slider, b_slider = st.slider(
-    "Wähle den Bereich [a, b]", min_value=-6.0, max_value=6.0,
-    value=(st.session_state.a, st.session_state.b), step=0.01, key="slider"
-)
-
-# === Slideränderung überwachen ===
-if (a_slider != st.session_state.a) or (b_slider != st.session_state.b):
+elif (a_slider != st.session_state.a) or (b_slider != st.session_state.b):
     st.session_state.a = a_slider
     st.session_state.b = b_slider
     st.session_state.a_input = a_slider
