@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 
 st.session_state.setdefault("a_input", -1.96)
 st.session_state.setdefault("b_input", 1.96)
+if "slider_vals" not in st.session_state:
+    st.session_state.slider_vals = (-1.96, 1.96)
+
 
 st.set_page_config(layout="wide")
 
