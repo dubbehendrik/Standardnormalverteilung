@@ -108,9 +108,15 @@ with col2:
     fig2, ax2 = plt.subplots()
     ax2.plot(x, cumprob, color="blue", lw=2)
     ax2.set_ylim(-0.05, 1.05)
-    ax2.axvline(a, color="green", linestyle="--")
-    ax2.axvline(b, color="green", linestyle="--")
-    ax2.hlines([phi_a, phi_b], xmin=-6, xmax=[a, b], colors='green', linestyles='--')
+
+    # Vertikale Linien: nur bis zum Punkt
+    ax2.plot([a, a], [0, phi_a], color="green", linestyle="--")
+    ax2.plot([b, b], [0, phi_b], color="green", linestyle="--")
+
+    # Horizontale Linien: nur bis zum Punkt
+    ax2.plot([-6, a], [phi_a, phi_a], color="green", linestyle="--")
+    ax2.plot([-6, b], [phi_b, phi_b], color="green", linestyle="--")
+    
     ax2.plot(a, phi_a, 'go')
     ax2.plot(b, phi_b, 'go')
     ax2.plot(0, 0.5, 'o', color='blue', markersize=6, label="Wendepunkt (0, 0.5)")
