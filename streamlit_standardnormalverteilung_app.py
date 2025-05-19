@@ -133,7 +133,7 @@ with col2:
 
 st.latex(rf"""
 \begin{{align*}}
-P({a:.2f} \leq Z \leq {b:.2f})
+P({a:.2f} \leq z \leq {b:.2f})
 &= \Phi({b:.2f}) - \Phi({a:.2f}) \\
 &= {phi_b:.4f} - {phi_a:.4f} \\
 &= \underline{{\underline{{{prob:.4f}}}}}
