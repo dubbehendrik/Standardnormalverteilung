@@ -1,6 +1,7 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.special import ndtr
 
 st.session_state.setdefault("a_input", -1.96)
 st.session_state.setdefault("b_input", 1.96)
@@ -44,7 +45,7 @@ randWert = 6
 dSchritt = 0.001
 x = np.arange(-randWert, randWert, dSchritt)
 phi = (2 * np.pi) ** -0.5 * np.exp(-0.5 * x**2)
-cumprob = np.cumsum(phi) * dSchritt
+cumprob = ndtr(x)
 
 # === Initialisierung ===
 if "a" not in st.session_state: st.session_state.a = -1.96
@@ -78,12 +79,8 @@ st.slider("Wähle den Bereich [a, b]", min_value=-6.0, max_value=6.0,
 # === Wahrscheinlichkeiten berechnen ===
 a = st.session_state.a
 b = st.session_state.b
-a_idx = np.searchsorted(x, a)
-b_idx = np.searchsorted(x, b)
-a_idx = np.searchsorted(x, a)
-b_idx = np.searchsorted(x, b)
-phi_a = np.trapz(phi[:a_idx], x[:a_idx])
-phi_b = np.trapz(phi[:b_idx], x[:b_idx])
+phi_a = ndtr(a)
+phi_b = ndtr(b)
 prob = phi_b - phi_a
 
 # === Plots ===
